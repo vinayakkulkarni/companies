@@ -8,6 +8,7 @@ const routes = [{
   path: '/',
   name: 'Search',
   component: Search,
+  alias: '/search',
 }];
 
 export default new Router({
