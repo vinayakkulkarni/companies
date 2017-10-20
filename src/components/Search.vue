@@ -12,29 +12,52 @@
         <button type="submit" class="button is-primary">Search</button>
       </div>
     </form>
+    <br />
+    <div v-if="results">
+      <div class="card" v-for="(result, index) in results" :key="result.id">
+        <div class="card-content">
+          <p class="title">
+            {{ result.split(' ').map(w => w[0].toUpperCase() + w.substr(1).toLowerCase()).join(' ') }}
+          </p>
+        </div>
+        <!-- <footer class="card-footer">
+          <p class="card-footer-item">
+            <span>
+              View on <a href="https://twitter.com/codinghorror/status/506010907021828096">Twitter</a>
+            </span>
+          </p>
+          <p class="card-footer-item">
+            <span>
+              Share on <a href="#">Facebook</a>
+            </span>
+          </p>
+        </footer> -->
+      </div>
+    </div>
+    <div v-if="noresults">
+      No results found.
+    </div>
   </div>
 </template>
 
 <script>
-import Config from '../config';
-
 export default {
   name: 'search',
   data() {
     return {
       query: this.defaultQueryParams(),
       results: null,
+      noresults: false,
       errors: {},
-      config: Config,
     };
   },
   methods: {
     hitAPI() {
       const t = this;
-      t.$http.post(t.config.site, t.query, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+      t.$http.get(`https://emis.snapmint.com/get_company.json?q=${t.query.company}`)
       .then((response) => {
-        // console.log('response.data', response.data);
-        t.results = response.data.recommendations;
+        t.results = response.data;
+        t.noresults = true ? response.data.length === 0 : false;
       })
       .catch((error) => {
         t.errors = error;
@@ -43,9 +66,8 @@ export default {
     defaultQueryParams() {
       return {
         company: null,
-        t: Date.now(),
+        time: Date.now(),
         type: 'COMPANY',
-        limit: null,
       };
     },
   },
