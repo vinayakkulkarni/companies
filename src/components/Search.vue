@@ -57,7 +57,7 @@ export default {
       t.$http.get(`https://emis.snapmint.com/get_company.json?q=${t.query.company}`)
       .then((response) => {
         t.results = response.data;
-        t.noresults = true ? response.data.length === 0 : false;
+        t.noresults = response.data.length === 0 || false;
       })
       .catch((error) => {
         t.errors = error;
