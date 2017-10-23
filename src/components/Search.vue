@@ -54,7 +54,7 @@ export default {
   methods: {
     hitAPI() {
       const t = this;
-      t.$http.get(`https://emis.snapmint.com/get_company.json?q=${t.query.company}`)
+      t.$http.get(`https://emis.snapmint.com/get_company.json?q=${t.query.company}`, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
       .then((response) => {
         t.results = response.data;
         t.noresults = response.data.length === 0 || false;

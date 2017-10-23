@@ -5,10 +5,9 @@ import Search from '@/components/Search';
 Vue.use(Router);
 
 const routes = [{
-  path: '/',
+  path: '/companies',
   name: 'Search',
   component: Search,
-  alias: '/search',
 }];
 
 export default new Router({
