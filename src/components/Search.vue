@@ -17,7 +17,7 @@
       <div class="card" v-for="(result, index) in results" :key="result.id">
         <div class="card-content">
           <p class="title">
-            {{ index + 1 }} {{ result.split(' ').map(w => w[0].toUpperCase() + w.substr(1).toLowerCase()).join(' ') }}
+            {{ index + 1 }}. {{ result.split(' ').map(w => w[0].toUpperCase() + w.substr(1).toLowerCase()).join(' ') }}
           </p>
         </div>
         <!-- <footer class="card-footer">
