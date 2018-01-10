@@ -17,7 +17,7 @@
       <div class="card" v-for="(result, index) in results" :key="result.id">
         <div class="card-content">
           <p class="title">
-            {{ result.split(' ').map(w => w[0].toUpperCase() + w.substr(1).toLowerCase()).join(' ') }}
+            {{ index + 1 }} {{ result.split(' ').map(w => w[0].toUpperCase() + w.substr(1).toLowerCase()).join(' ') }}
           </p>
         </div>
         <!-- <footer class="card-footer">
@@ -54,14 +54,18 @@ export default {
   methods: {
     hitAPI() {
       const t = this;
-      t.$http.get(`https://emis.snapmint.com/get_company.json?q=${t.query.company}`, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
-      .then((response) => {
-        t.results = response.data;
-        t.noresults = response.data.length === 0 || false;
-      })
-      .catch((error) => {
-        t.errors = error;
-      });
+      t.$http
+        .get(
+          `https://emis.snapmint.com/get_company.json?q=${t.query.company}`,
+          { headers: { 'X-Requested-With': 'XMLHttpRequest' } },
+        )
+        .then((response) => {
+          t.results = response.data;
+          t.noresults = response.data.length === 0 || false;
+        })
+        .catch((error) => {
+          t.errors = error;
+        });
     },
     defaultQueryParams() {
       return {
